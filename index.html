@@ -18,7 +18,7 @@
         <div class="form-header">
           <h2>Registration form</h2>
         </div>
-        <form action="" method="post" class="form">
+        <form class="form">
           <div class="form-control">
             <label for="fname">First Name</label>
             <input
@@ -41,7 +41,7 @@
           </div>
           <div class="form-control">
             <label for="dob">Date of birth</label>
-            <input type="date" value="" name="dob" />
+            <input type="date" id="dob" value="" name="dob" />
           </div>
 
           <div class="form-control">
@@ -51,7 +51,7 @@
               value=""
               placeholder="Enter your phone number"
               name="phone"
-              id="dob"
+              id="phone"
             />
           </div>
           <div class="form-control">
@@ -73,10 +73,77 @@
             </select>
           </div>
           <div class="form-control">
-            <input type="submit" value="Submit" name="submit" />
+            <input
+              type="button"
+              onclick="savedata()"
+              value="Submit"
+              name="submit"
+            />
           </div>
         </form>
       </div>
+      <section class="main-content">
+        <h2>All Registered Users</h2>
+        <div style="overflow-x: auto" class="contents">
+          <table id="data-table">
+            <thead>
+              <tr>
+                <th>S/N</th>
+                <th>First Name</th>
+                <th>Surname</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>DOB</th>
+                <th>Gender</th>
+                <!-- <th colspan="2">Actions</th> -->
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+      </section>
     </main>
+    <script type="text/javascript">
+      var checkedValue = [];
+      var row;
+      var data;
+
+      let sN = 0;
+
+      function savedata() {
+        var gender = document.getElementById("gender");
+        sN += 1;
+
+        data = [
+          sN,
+          document.getElementById("fname").value,
+          document.getElementById("surname").value,
+          gender.options[gender.selectedIndex].text,
+          document.getElementById("email").value,
+          document.getElementById("dob").value,
+          document.getElementById("phone").value,
+        ];
+        console.log(data);
+        createtablerow();
+      }
+
+      function createtablerow() {
+        table = document.getElementById("data-table");
+
+        const tbody = document.getElementById("tbody");
+        // var columnCount = table.rows[0].cells.length;
+
+        const row = document.createElement("tr");
+
+        data.forEach((el, index) => {
+          var cell = document.createElement("td");
+          var cellText = document.createTextNode(el);
+          cell.appendChild(cellText);
+          row.appendChild(cell);
+        });
+
+        tbody.appendChild(row);
+      }
+    </script>
   </body>
 </html>
